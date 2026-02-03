@@ -4,6 +4,8 @@ package control
 import (
 	"encoding/binary"
 	"log"
+	"math"
+    "time"
 )
 
 func SendMessage(conn interface{ Write([]byte) error }, message string) error {
