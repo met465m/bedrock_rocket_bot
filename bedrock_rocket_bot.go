@@ -1,5 +1,5 @@
 // minecraft_rocket_bot.go
-package main
+package bedrock_rocket_bot
 
 import (
 	"log"
@@ -109,4 +109,5 @@ func main() {
 		log.Fatalf("Ошибка: %v", err)
 	}
 }
+
 
