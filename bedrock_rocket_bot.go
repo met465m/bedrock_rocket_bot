@@ -5,10 +5,10 @@ import (
 	"log"
 	"time"
 
-	"minecraft_rocket_bot/config"
-	"minecraft_rocket_bot/control"
-	"minecraft_rocket_bot/net_control"
-	"minecraft_rocket_bot/packet"
+	"bedrock_rocket_bot/config"
+	"bedrock_rocket_bot/control"
+	"bedrock_rocket_bot/net_control"
+	"bedrock_rocket_bot/packet"
 )
 
 type Client struct {
@@ -109,3 +109,4 @@ func main() {
 		log.Fatalf("Ошибка: %v", err)
 	}
 }
+
