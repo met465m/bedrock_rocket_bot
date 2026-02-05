@@ -1,37 +1,38 @@
 package bedrock_rocket_bot
 
 import (
+	"encoding/binary"
+	"fmt"
 	"net"
 )
 
 // Login отправляет пакет авторизации
 func Login(conn net.Conn, username string) error {
-	buf := make([]byte, 0)
-	WriteUint8(&buf, LoginPacketID)
+	var packet []byte
 
-	// Protocol Version (489 для 1.20.70)
-	WriteUint32(&buf, 489)
+	// Packet ID
+	packet = append(packet, 0x01)
 
-	// Client Data (заглушка)
-	WriteUint64(&buf, 0) // Client ID
-	WriteString(&buf, username)
-	WriteString(&buf, "") // Skin ID
-	WriteString(&buf, "") // Language
+	// Protocol Version (например, 489 для 1.20.70)
+	packet = append(packet, 0xe9, 0x01, 0x00, 0x00) // 489
 
-	frame := NewFrame(buf)
-	packet := frame.Serialize()
+	// Chain Data (заглушка)
+	packet = WriteString(packet, "{}")
 
-	_, err := conn.Write(packet)
-	return err
+	// Skin Data (заглушка)
+	packet = WriteString(packet, "{}")
+
+	// Имя игрока
+	packet = WriteString(packet, username)
+
+	// Отправляем
+	frame := NewFrame(packet)
+	data := frame.Serialize()
+
+	_, err := conn.Write(data)
+	if err != nil {
+		return fmt.Errorf("ошибка отправки Login: %w", err)
+	}
+
+	return nil
 }
-
-// NewTextPacket создаёт пакет чата
-func NewTextPacket(message string) []byte {
-	buf := make([]byte, 0)
-	WriteUint8(&buf, TextPacketID)
-	WriteUint8(&buf, 0x01) // Chat type
-	WriteString(&buf, "")  // Sender
-	WriteString(&buf, message)
-	return buf
-}
-
