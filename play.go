@@ -44,7 +44,7 @@ func (b *Bot) Connect(addr string) error {
 	b.Running = true
 
 	// Устанавливаем таймаут
-	conn.SetDeadline(time.Now().Add(10 * time.Second))
+	conn.SetDeadline(time.Now().Add(30 * time.Second))
 
 	// Handshake
 	if err := Handshake(conn); err != nil {
