@@ -1,4 +1,4 @@
-package bedrock_rocket_bot
+package github.com/met465m/bedrock_rocket_bot
 
 import (
  "bytes"
